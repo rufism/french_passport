@@ -1,0 +1,125 @@
+{
+    "items": [
+        {
+            "id": "0",
+            "title": "Read a French Book",
+            "desc": "The book must be at least 150 pages long.",
+            "icon": 0,
+            "group": "Grade 9",
+            "submission": {
+                "type": "input",
+                "message": "What is the name of the book?"
+            }
+        },
+        {
+            "id": "1",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 2,
+            "group": "Grade 10",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "2",
+            "title": "Read a French Book",
+            "desc": "The book must be at least 150 pages long.",
+            "icon": 2,
+            "group": "Grade 11",
+            "submission": {
+                "type": "input",
+                "message": "What is the name of the book?"
+            }
+        },
+        {
+            "id": "3",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 3,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "3",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 1,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "4",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 3,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "5",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 2,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "6",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 1,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "7",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 0,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "8",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 3,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        },
+        {
+            "id": "9",
+            "title": "Write a Letter",
+            "desc": "The letter must be at least 5 paragraphs or roughly one page in length.",
+            "icon": 2,
+            "group": "Grade 12",
+            "submission": {
+                "type": "textarea",
+                "message": "Enter the text of the letter"
+            }
+        }
+    ]
+}

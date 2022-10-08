@@ -1,0 +1,32 @@
+{
+    "accounts": [
+        {
+            "id": "0",
+            "role": "student",
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "completed": [
+                "0",
+                "4"
+            ]
+        },
+        {
+            "id": "1",
+            "role": "student",
+            "firstName": "Joseph",
+            "lastName": "Martinez",
+            "completed": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        {
+            "id": "2",
+            "role": "teacher",
+            "firstName": "Sarah",
+            "lastName": "Greoning",
+            "completed": []
+        }
+    ]
+}
