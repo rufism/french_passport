@@ -23,66 +23,64 @@ export default function TeacherItemView() {
     getItem();
   }, []);
 
+  let contentMarkup;
+  if (loading) {
+    contentMarkup = <div>Loading</div>;
+  } else {
+    contentMarkup = (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          width: '80%',
+          height: '100%'
+        }}
+      >
+        {/* Label */}
+        <div>
+          <div style={{ textAlign: 'left' }}>
+            <div>Title</div>
+            <div>{item.title}</div>
+          </div>
+        </div>
+
+        {/* Group  */}
+        <div>
+          <div style={{ textAlign: 'left' }}>
+            <div>Group</div>
+            <div>{item.group}</div>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div>
+          <div style={{ textAlign: 'left' }}>
+            <div>Description</div>
+            <div>{item.desc}</div>
+          </div>
+        </div>
+
+        {/* Completion Text */}
+        <div>
+          <div style={{ textAlign: 'left' }}>
+            <div>Completion Text</div>
+            <div>{item.submissionMessage}</div>
+          </div>
+        </div>
+
+        {/* Icon */}
+        <div>
+          <div style={{ textAlign: 'left' }}>
+            <div>Icon </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const headerRenderer = () => <StandardHeader subHeaderText="Item View" />;
-  const contentRenderer = () => (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        width: '80%',
-        height: '100%'
-      }}
-    >
-      <div>
-        <div style={{ textAlign: 'left' }}>
-          <div>Loading</div>
-          <div>{loading}</div>
-        </div>
-      </div>
-
-      {/* Label */}
-      <div>
-        <div style={{ textAlign: 'left' }}>
-          <div>Title</div>
-          <div>{item.title}</div>
-        </div>
-      </div>
-
-      {/* Group  */}
-      <div>
-        <div style={{ textAlign: 'left' }}>
-          <div>Group</div>
-          <div>{item.group}</div>
-        </div>
-      </div>
-
-      {/* Description */}
-      <div>
-        <div style={{ textAlign: 'left' }}>
-          <div>Description</div>
-          <div>{item.desc}</div>
-        </div>
-      </div>
-
-      {/* Completion Text */}
-      <div>
-        <div style={{ textAlign: 'left' }}>
-          <div>Completion Text</div>
-          <div>{item.submissionMessage}</div>
-        </div>
-      </div>
-
-      {/* Icon */}
-      <div>
-        <div style={{ textAlign: 'left' }}>
-          <div>Icon </div>
-        </div>
-      </div>
-
-      {/*  */}
-    </div>
-  );
+  const contentRenderer = () => contentMarkup;
   const footerRenderer = () => (
     <div>
       <button type="button" onClick={() => navigate('/teacher')}>

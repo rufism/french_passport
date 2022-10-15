@@ -58,7 +58,7 @@ export default function TeacherTeacherView() {
     );
   }
 
-  const headerRenderer = () => <StandardHeader subHeaderText="Student View" />;
+  const headerRenderer = () => <StandardHeader subHeaderText="Teacher View" />;
   const contentRenderer = () => contentMarkup;
   const footerRenderer = () => (
     <div style={{ display: 'flex', gap: '10px' }}>
