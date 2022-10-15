@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScrollingLayoutWithTabs from '../../layouts/ScrollingLayoutWithTabs';
 import StandardHeader from '../../shared/StandardHeader';
 import MobileStudentCard from '../../shared/MobileStudentCard';
 import MobilePassportItem from '../../shared/MobilePassportItem';
 import NewEntityCard from '../../shared/NewEntityCard';
-
-import accounts from '../../accounts.json';
-import items from '../../items.json';
+import * as api from '../../api/base';
 
 export default function TeacherHome() {
-  const defaultStudents = accounts.accounts.filter((account) => account.role === 'student');
-  const defaultTeachers = accounts.accounts.filter((account) => account.role === 'teacher');
-  const defaultItems = items.items;
+  const [loading, setLoading] = useState(false);
+  const [students, setStudents] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+  const [items, setItems] = useState([]);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    async function getData() {
+      setLoading(true);
+
+      const studentsRes = await api.getStudents();
+      setStudents(studentsRes.students);
+
+      const itemsRes = await api.getItems();
+      setItems(itemsRes.items);
+
+      const teachersRes = await api.getTeachers();
+      setTeachers(teachersRes.teachers);
+
+      setLoading(false);
+    }
+
+    getData();
+  }, []);
+
   let contentMarkup;
-  if (activeTabIndex === 0) {
-    contentMarkup = defaultStudents.map((student) => (
+  if (loading) {
+    contentMarkup = <div>Loading</div>;
+  } else if (activeTabIndex === 0) {
+    contentMarkup = students.map((student) => (
       <MobileStudentCard
         firstName={student.firstName}
         lastName={student.lastName}
@@ -38,7 +58,7 @@ export default function TeacherHome() {
       <NewEntityCard label="New Student" onClick={() => navigate('/teacher/student/new')} />
     );
   } else if (activeTabIndex === 1) {
-    contentMarkup = defaultItems.map((item) => (
+    contentMarkup = items.map((item) => (
       <MobilePassportItem
         title={item.title}
         desc={item.desc}
@@ -61,7 +81,7 @@ export default function TeacherHome() {
       <NewEntityCard label="New Item" onClick={() => navigate('/teacher/item/new')} />
     );
   } else if (activeTabIndex === 2) {
-    contentMarkup = defaultTeachers.map((teacher) => (
+    contentMarkup = teachers.map((teacher) => (
       <MobileStudentCard
         firstName={teacher.firstName}
         lastName={teacher.lastName}

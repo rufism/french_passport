@@ -5,14 +5,30 @@ import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import StandardHeader from '../../../shared/StandardHeader';
 import MobilePassportItem from '../../../shared/MobilePassportItem';
 import IconOption from '../../../shared/IconOption';
+import * as api from '../../../api/base';
 
 export default function TeacherItemNew() {
+  const [saving, setSaving] = useState(false);
   const [enteredName, setEnteredName] = useState('');
   const [enteredGroup, setEnteredGroup] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredCompletionText, setEnteredCompletionText] = useState('');
   const [iconSelection, setIconSelection] = useState(0);
   const navigate = useNavigate();
+
+  const handleSave = async () => {
+    setSaving(true);
+
+    await api.createItem({
+      title: enteredName,
+      desc: enteredDescription,
+      icon: iconSelection,
+      submissionType: 'text',
+      submissionMessage: enteredCompletionText
+    });
+
+    setSaving(false);
+  };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Item New" />;
   const contentRenderer = () => (
@@ -119,11 +135,12 @@ export default function TeacherItemNew() {
   );
   const footerRenderer = () => (
     <div>
-      <button type="button" onClick={() => navigate('/teacher')}>
-        Save
-      </button>
-      <button type="button" onClick={() => navigate('/teacher')}>
+      {/* <button type="button" onClick={() => navigate('/teacher')}> */}
+      <button type="button" disabled={saving} onClick={() => navigate('/teacher')}>
         Cancel
+      </button>
+      <button type="button" disabled={saving} onClick={handleSave}>
+        Save
       </button>
     </div>
   );

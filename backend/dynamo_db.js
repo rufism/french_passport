@@ -7,166 +7,214 @@ const ACCOUNT_TABLE = 'FrenchPassportAccountsTable';
 const ITEM_TABLE = 'FrenchPassportItemsTable';
 const SUBMISSION_TABLE = 'FrenchPassportSubmissionsTable';
 
-export async function getAccount(id) {
+async function getAccount(args) {
+  // log
+  console.log(`[DB] get account ${JSON.stringify(args)}`);
+
   try {
-    const account = await docClient.get({ TableName: ACCOUNT_TABLE, Key: { id } }).promise();
-    return account;
+    const account = await docClient
+      .get({ TableName: ACCOUNT_TABLE, Key: { id: args.id } })
+      .promise();
+    return account.Item;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return null;
 }
 
-export async function getAllAccounts() {
+async function getAllAccounts(args) {
+  // log
+  console.log(`[DB] get all accounts ${JSON.stringify(args)}`);
+
   try {
     const accounts = await docClient.scan({ TableName: ACCOUNT_TABLE }).promise();
-    return accounts;
+    // console.log(accounts);
+    return accounts.Items;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return [];
 }
 
-export async function createAccount(id) {
+async function createAccount(args) {
+  // log
+  console.log(`[DB] create account ${JSON.stringify(args)}`);
+
   try {
-    await docClient.put({ TableName: ACCOUNT_TABLE, Item: { id } }).promise();
+    const res = await docClient.put({ TableName: ACCOUNT_TABLE, Item: args }).promise();
+    console.log(res);
     return true;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return false;
 }
 
-export async function updateStudent(id) {
+async function updateAccount(args) {
+  // log
+  console.log(`[DB] update account ${JSON.stringify(args)}`);
+
+  const updates = { ...args };
+  delete updates.id; // everything except the id
+
+  const updateExpression = [];
+  const expressionAttributeValues = {};
+
+  for (const [key, value] of Object.entries(updates)) {
+    updateExpression.push(`${key} = :${key}`);
+    expressionAttributeValues[`:${key}`] = value;
+  }
+
   try {
-    await docClient.put({ TableName: ACCOUNT_TABLE, Item: { id } }).promise();
+    const res = await docClient
+      .update({
+        TableName: ACCOUNT_TABLE,
+        Key: { id: args.id },
+        UpdateExpression: `set ${updateExpression.join(', ')}`,
+        ExpressionAttributeValues: expressionAttributeValues
+      })
+      .promise();
+    console.log(res);
     return true;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return false;
 }
 
-export async function deleteStudent(id) {
-  try {
-    await docClient.delete({ TableName: ACCOUNT_TABLE, Item: { id } }).promise();
-    return true;
-  } catch (error) {
-    console.error(error);
-  }
+async function getItem(args) {
+  // log
+  console.log(`[DB] get item ${JSON.stringify(args)}`);
 
-  return false;
-}
-
-export async function getItem(id) {
   try {
-    const item = await docClient.get({ TableName: ITEM_TABLE, Key: { id } }).promise();
-    return item;
+    const item = await docClient.get({ TableName: ITEM_TABLE, Key: { id: args.id } }).promise();
+    return item.Item;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return null;
 }
 
-export async function getAllItems() {
+async function getAllItems(args) {
+  // log
+  console.log(`[DB] get all items ${JSON.stringify(args)}`);
+
   try {
     const items = await docClient.scan({ TableName: ITEM_TABLE }).promise();
-    return items;
+    return items.Items;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return [];
 }
 
-export async function createItem(id) {
+async function createItem(args) {
+  // log
+  console.log(`[DB] create item ${JSON.stringify(args)}`);
+
   try {
-    await docClient.put({ TableName: ITEM_TABLE, Item: { id } }).promise();
+    await docClient.put({ TableName: ITEM_TABLE, Item: args }).promise();
     return true;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return false;
 }
 
-export async function updateItem(id) {
+async function updateItem(args) {
+  // log
+  console.log(`[DB] update item ${JSON.stringify(args)}`);
+
+  const updates = { ...args };
+  delete updates.id; // everything except the id
+
+  const updateExpression = [];
+  const expressionAttributeValues = {};
+
+  for (const [key, value] of Object.entries(updates)) {
+    updateExpression.push(`${key} = :${key}`);
+    expressionAttributeValues[`:${key}`] = value;
+  }
+
   try {
-    await docClient.put({ TableName: ITEM_TABLE, Item: { id } }).promise();
+    const res = await docClient
+      .update({
+        TableName: ITEM_TABLE,
+        Key: { id: args.id },
+        UpdateExpression: `set ${updateExpression.join(', ')}`,
+        ExpressionAttributeValues: expressionAttributeValues
+      })
+      .promise();
+    console.log(res);
     return true;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return false;
 }
 
-export async function deleteItem(id) {
-  try {
-    await docClient.delete({ TableName: ITEM_TABLE, Item: { id } }).promise();
-    return true;
-  } catch (error) {
-    console.error(error);
-  }
+async function getSubmission(args) {
+  // log
+  console.log(`[DB] get submission ${JSON.stringify(args)}`);
 
-  return false;
-}
-
-export async function getSubmission(id) {
   try {
-    const submission = await docClient.get({ TableName: SUBMISSION_TABLE, Key: { id } }).promise();
-    return submission;
+    const submission = await docClient
+      .get({ TableName: SUBMISSION_TABLE, Key: { id: args.id } })
+      .promise();
+    return submission.Item;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return null;
 }
 
-export async function getAllSubmissions() {
+async function getAllSubmissions(args) {
+  // log
+  console.log(`[DB] get all submissions ${JSON.stringify(args)}`);
+
   try {
     const submissions = await docClient.scan({ TableName: SUBMISSION_TABLE }).promise();
-    return submissions;
+    return submissions.Items;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return [];
 }
 
-// export async function getSubmissionsOnStudent(studentId) {
-//   try {
-//     const submissions = await docClient.scan({ TableName: SUBMISSION_TABLE }).promise();
-//     return submissions;
-//   } catch (error) {
-//     console.error(error);
-//   }
+async function createSubmission(args) {
+  // log
+  console.log(`[DB] create submission ${JSON.stringify(args)}`);
 
-//   return [];
-// }
-// export async function getSubmissionsOnItem(itemId) {
-//   try {
-//     const submissions = await docClient.scan({ TableName: SUBMISSION_TABLE }).promise();
-//     return submissions;
-//   } catch (error) {
-//     console.error(error);
-//   }
-
-//   return [];
-// }
-
-export async function createSubmission(id) {
   try {
-    await docClient.put({ TableName: SUBMISSION_TABLE, Item: { id } }).promise();
+    await docClient.put({ TableName: SUBMISSION_TABLE, Item: args }).promise();
     return true;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return false;
 }
+
+module.exports = {
+  getAccount,
+  getAllAccounts,
+  createAccount,
+  updateAccount,
+  getItem,
+  getAllItems,
+  createItem,
+  updateItem,
+  getSubmission,
+  getAllSubmissions,
+  createSubmission
+};

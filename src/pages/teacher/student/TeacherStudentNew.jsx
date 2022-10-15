@@ -3,11 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import MobileStudentCard from '../../../shared/MobileStudentCard';
 import StandardHeader from '../../../shared/StandardHeader';
+import * as api from '../../../api/base';
 
 export default function TeacherStudentNew() {
-  const navigate = useNavigate();
+  const [saving, setSaving] = useState(false);
   const [enteredFirstName, setEnteredFirstName] = useState('');
   const [enteredLastName, setEnteredLastName] = useState('');
+  const navigate = useNavigate();
+
+  const handleSave = async () => {
+    setSaving(true);
+
+    await api.createStudent({
+      firstName: enteredFirstName,
+      lastName: enteredLastName
+    });
+
+    setSaving(false);
+  };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Student New" />;
   const contentRenderer = () => (
@@ -58,10 +71,11 @@ export default function TeacherStudentNew() {
   );
   const footerRenderer = () => (
     <div>
-      <button type="button" onClick={() => navigate('/teacher')}>
+      {/* <button type="button" onClick={() => navigate('/teacher')}> */}
+      <button type="button" disabled={saving} onClick={() => navigate('/teacher')}>
         Cancel
       </button>
-      <button type="button" onClick={() => navigate('/teacher')}>
+      <button type="button" disabled={saving} onClick={handleSave}>
         Save
       </button>
     </div>

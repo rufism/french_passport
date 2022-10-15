@@ -1,30 +1,141 @@
-import * as dydb from './dynamo_db';
+const crypto = require('crypto');
+const dydb = require('./dynamo_db');
 
 /*
 
   Students
 
 */
-export async function getStudent(id) {
-  return dydb.getAccount(id);
-}
-export async function getStudents() {
-  return dydb.getAllAccounts();
-}
-export async function createStudent() {
+async function getStudent(args) {
+  // log
+  console.log(`get student ${JSON.stringify(args)}`);
+
   // validation
 
   // conversion
+  const pass = {
+    id: args.pathParams.id
+  };
 
-  return dydb.createAccount();
+  // call
+  const res = await dydb.getAccount(pass);
+
+  // return
+  return {
+    id: res.id,
+    firstName: res.firstName,
+    lastName: res.lastName,
+    completed: res.completed,
+    createdAt: res.createdAt,
+    createdBy: res.createdBy,
+    updatedAt: res.updatedAt,
+    updatedBy: res.updatedBy
+  };
+}
+
+async function getStudents(args) {
+  // log
+  console.log(`get all students ${JSON.stringify(args)}`);
+
+  // validate
 
   // conversion
+  const pass = {};
+
+  // call
+  const res = await dydb.getAllAccounts(pass);
+
+  // return
+  return {
+    students: res
+      .filter((student) => student.role === 'student')
+      .map((student) => ({
+        id: student.id,
+        firstName: student.firstName,
+        lastName: student.lastName,
+        completed: student.completed,
+        createdAt: student.createdAt,
+        createdBy: student.createdBy,
+        updatedAt: student.updatedAt,
+        updatedBy: student.updatedBy
+      }))
+  };
 }
-export async function updateStudent(id) {
-  return dydb.updateAccount(id);
+
+async function createStudent(args) {
+  // log
+  console.log(`create student ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const id = crypto.randomUUID();
+  const timestamp = Date.now();
+  const pass = {
+    id,
+    role: 'student',
+    firstName: args.body.firstName,
+    lastName: args.body.lastName,
+    completed: [],
+    createdAt: timestamp,
+    createdBy: '',
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: false
+  };
+
+  console.log(`passed params ${JSON.stringify(pass)}`);
+
+  await dydb.createAccount(pass);
+
+  // conversion
+  return { message: 'successfully created student' };
 }
-export async function deleteStudent(id) {
-  return dydb.deleteAccount(id);
+
+async function updateStudent(args) {
+  // log
+  console.log(`update student ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: ''
+  };
+
+  if (args.body.firstName) pass.firstName = args.body.firstName;
+  if (args.body.lastName) pass.lastName = args.body.lastName;
+
+  // call
+  await dydb.updateAccount(pass);
+
+  // return
+  return { message: 'successfully updated student' };
+}
+
+async function deleteStudent(args) {
+  // log
+  console.log(`delete student ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: true
+  };
+
+  // call
+  await dydb.updateAccount(pass);
+
+  // return
+  return { message: 'successfully deleted student' };
 }
 
 /*
@@ -32,20 +143,136 @@ export async function deleteStudent(id) {
   Teachers
 
 */
-export async function getTeacher(id) {
-  return dydb.getAccount(id);
+async function getTeacher(args) {
+  // log
+  console.log(`get teacher ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const pass = {
+    id: args.pathParams.id
+  };
+
+  // call
+  const res = await dydb.getAccount(pass);
+
+  // return
+  return {
+    id: res.id,
+    firstName: res.firstName,
+    lastName: res.lastName,
+    completed: res.completed,
+    createdAt: res.createdAt,
+    createdBy: res.createdBy,
+    updatedAt: res.updatedAt,
+    updatedBy: res.updatedBy
+  };
 }
-export async function getTeachers() {
-  return dydb.getAllAccounts();
+
+async function getTeachers(args) {
+  // log
+  console.log(`get all teachers ${JSON.stringify(args)}`);
+
+  // validate
+
+  // conversion
+  const pass = {};
+
+  // call
+  const res = await dydb.getAllAccounts(pass);
+
+  // return
+  return {
+    teachers: res
+      .filter((student) => student.role === 'teacher')
+      .map((student) => ({
+        id: student.id,
+        firstName: student.firstName,
+        lastName: student.lastName,
+        completed: student.completed,
+        createdAt: student.createdAt,
+        createdBy: student.createdBy,
+        updatedAt: student.updatedAt,
+        updatedBy: student.updatedBy
+      }))
+  };
 }
-export async function createTeacher(id) {
-  return dydb.createAccount(id);
+
+async function createTeacher(args) {
+  // log
+  console.log(`create teacher ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const id = crypto.randomUUID();
+  const timestamp = Date.now();
+  const pass = {
+    id,
+    role: 'teacher',
+    firstName: args.body.firstName,
+    lastName: args.body.lastName,
+    completed: [],
+    createdAt: timestamp,
+    createdBy: '',
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: false
+  };
+
+  console.log(`passed params ${JSON.stringify(pass)}`);
+
+  await dydb.createAccount(pass);
+
+  // conversion
+  return { message: 'successfully created teacher' };
 }
-export async function updateTeacher(id) {
-  return dydb.updateAccount(id);
+
+async function updateTeacher(args) {
+  // log
+  console.log(`update teacher ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: ''
+  };
+
+  if (args.body.firstName) pass.firstName = args.body.firstName;
+  if (args.body.lastName) pass.lastName = args.body.lastName;
+
+  // call
+  await dydb.updateAccount(pass);
+
+  // return
+  return { message: 'successfully updated teacher' };
 }
-export async function deleteTeacher(id) {
-  return dydb.deleteAccount(id);
+
+async function deleteTeacher(args) {
+  // log
+  console.log(`delete teacher ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: true
+  };
+
+  // call
+  await dydb.updateAccount(pass);
+
+  // return
+  return { message: 'successfully deleted teacher' };
 }
 
 /*
@@ -53,20 +280,142 @@ export async function deleteTeacher(id) {
   Items
 
 */
-export async function getItem(id) {
-  return dydb.getItem(id);
+async function getItem(args) {
+  // log
+  console.log(`get item ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const pass = {
+    id: args.pathParams.id
+  };
+
+  // call
+  const res = await dydb.getItem(pass);
+
+  // return
+  return {
+    id: res.id,
+    title: res.title,
+    desc: res.desc,
+    icon: res.icon,
+    submissionType: res.submissionType,
+    submissionMessage: res.submissionMessage,
+    createdAt: res.createdAt,
+    createdBy: res.createdBy,
+    updatedAt: res.updatedAt,
+    updatedBy: res.updatedBy
+  };
 }
-export async function getItems() {
-  return dydb.getAllItems();
+
+async function getItems(args) {
+  // log
+  console.log(`get all items ${JSON.stringify(args)}`);
+
+  // validate
+
+  // conversion
+  const pass = {};
+
+  // call
+  const res = await dydb.getAllItems(pass);
+
+  // return
+  return {
+    items: res.map((item) => ({
+      id: item.id,
+      title: item.title,
+      desc: item.desc,
+      icon: item.icon,
+      submissionType: item.submissionType,
+      submissionMessage: item.submissionMessage,
+      createdAt: item.createdAt,
+      createdBy: item.createdBy,
+      updatedAt: item.updatedAt,
+      updatedBy: item.updatedBy
+    }))
+  };
 }
-export async function createItem(id) {
-  return dydb.createItem(id);
+
+async function createItem(args) {
+  // log
+  console.log(`create item ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const id = crypto.randomUUID();
+  const timestamp = Date.now();
+  const pass = {
+    id,
+    title: args.body.title,
+    desc: args.body.desc,
+    icon: args.body.icon,
+    submissionType: args.body.submissionType,
+    submissionMessage: args.body.submissionMessage,
+    createdAt: timestamp,
+    createdBy: '',
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: false
+  };
+
+  console.log(`passed params ${JSON.stringify(pass)}`);
+
+  await dydb.createItem(pass);
+
+  // conversion
+  return { message: 'successfully created item' };
 }
-export async function updateItem(id) {
-  return dydb.updateItem(id);
+
+async function updateItem(args) {
+  // log
+  console.log(`update item ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: ''
+  };
+
+  if (args.body.title) pass.title = args.body.title;
+  if (args.body.desc) pass.desc = args.body.desc;
+  if (args.body.icon) pass.icon = args.body.icon;
+  if (args.body.submissionType) pass.submissionType = args.body.submissionType;
+  if (args.body.submissionMessage) pass.submissionMessage = args.body.submissionMessage;
+
+  // call
+  await dydb.updateItem(pass);
+
+  // return
+  return { message: 'successfully updated item' };
 }
-export async function deleteItem(id) {
-  return dydb.deleteItem(id);
+
+async function deleteItem(args) {
+  // log
+  console.log(`delete item ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: true
+  };
+
+  // call
+  await dydb.updateItem(pass);
+
+  // return
+  return { message: 'successfully deleted item' };
 }
 
 /*
@@ -74,18 +423,103 @@ export async function deleteItem(id) {
   Submissions
 
 */
-export async function getSubmission(id) {
-  return dydb.getSubmission(id);
+async function getSubmission(args) {
+  // log
+  console.log(`get submission ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const pass = {
+    id: args.pathParams.id
+  };
+
+  // call
+  const res = await dydb.getSubmission(pass);
+
+  // return
+  return {
+    id: res.id,
+    accountId: res.accoundId,
+    itemId: res.itemId,
+    createdAt: res.createdAt,
+    createdBy: res.createdBy,
+    updatedAt: res.updatedAt,
+    updatedBy: res.updatedBy
+  };
 }
-export async function getSubmissions() {
-  return dydb.getAllSubmissions();
+
+async function getSubmissions(args) {
+  // log
+  console.log(`get all submissions ${JSON.stringify(args)}`);
+
+  // validate
+
+  // conversion
+  const pass = {};
+
+  // call
+  const res = await dydb.getAllSubmissions(pass);
+
+  // return
+  return {
+    submissions: res.map((sub) => ({
+      id: sub.id,
+      accountId: sub.accountId,
+      itemId: sub.itemId,
+      createdAt: sub.createdAt,
+      createdBy: sub.createdBy,
+      updatedAt: sub.updatedAt,
+      updatedBy: sub.updatedBy
+    }))
+  };
 }
-// export async function getSubmissionsOnStudent(studentId) {
-//   return dydb.getAllSubmissions(id);
-// }
-// export async function getSubmissionsOnItem(itemId) {
-//   return dydb.getAllSubmissions(id);
-// }
-export async function createSubmission(id) {
-  return dydb.createSubmission(id);
+
+async function createSubmission(args) {
+  // log
+  console.log(`create submission ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const id = crypto.randomUUID();
+  const timestamp = Date.now();
+  const pass = {
+    id,
+    accountId: args.body.accountId,
+    itemId: args.body.itemId,
+    createdAt: timestamp,
+    createdBy: '',
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: false
+  };
+
+  console.log(`passed params ${JSON.stringify(pass)}`);
+
+  await dydb.createSubmission(pass);
+
+  // conversion
+  return { message: 'successfully created submission' };
 }
+
+module.exports = {
+  getStudent,
+  getStudents,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+  getTeacher,
+  getTeachers,
+  createTeacher,
+  updateTeacher,
+  deleteTeacher,
+  getItem,
+  getItems,
+  createItem,
+  updateItem,
+  deleteItem,
+  getSubmission,
+  getSubmissions,
+  createSubmission
+};

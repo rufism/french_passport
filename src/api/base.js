@@ -1,15 +1,20 @@
-const BASE_URL = '';
+const BASE_URL = 'https://9s1hgfaw08.execute-api.us-east-2.amazonaws.com/serverless_lambda_stage';
 
 export async function baseCall(method, path, body, query) {
+  console.log(method);
+  console.log(path);
+  console.log(body);
+  console.log(query);
   const queryString = Object.entries(query).reduce((acc, q) => {
     const newAcc = acc === '' ? `?${q[0]}=${q[1]}` : `${acc},${q[0]}=${q[1]}`;
     return newAcc;
   }, '');
 
-  const fetchResult = await fetch({
+  console.log(queryString);
+
+  const fetchResult = await fetch(`${BASE_URL}${path}${queryString}`, {
     mode: 'cors',
     method,
-    url: `${BASE_URL}${path}${queryString}`,
     body: body ? JSON.stringify(body) : undefined
   });
 
@@ -23,19 +28,19 @@ export async function baseCall(method, path, body, query) {
 }
 
 export async function getCall(path, query) {
-  return baseCall('get', path, null, query);
+  return baseCall('get', path, null, query || {});
 }
 
 export async function postCall(path, body) {
-  return baseCall('post', path, body, null);
+  return baseCall('post', path, body, {});
 }
 
 export async function putCall(path, body) {
-  return baseCall('put', path, body, null);
+  return baseCall('put', path, body, {});
 }
 
 export async function deleteCall(path) {
-  return baseCall('delete', path, null, null);
+  return baseCall('delete', path, null, {});
 }
 
 /*
@@ -48,8 +53,8 @@ export async function getStudent(id) {
 export async function getStudents() {
   return getCall('/students/all');
 }
-export async function createStudent() {
-  return postCall('/students', {});
+export async function createStudent(body) {
+  return postCall('/students', body);
 }
 export async function updateStudent(id) {
   return putCall(`/students/${id}`, {});
@@ -64,8 +69,8 @@ export async function getTeacher(id) {
 export async function getTeachers() {
   return getCall('/teachers/all');
 }
-export async function createTeacher() {
-  return postCall('/teachers', {});
+export async function createTeacher(body) {
+  return postCall('/teachers', body);
 }
 export async function updateTeacher(id) {
   return putCall(`/teachers/${id}`);
@@ -80,8 +85,8 @@ export async function getItem(id) {
 export async function getItems() {
   return getCall('/items/all');
 }
-export async function createItem() {
-  return postCall('/items', {});
+export async function createItem(body) {
+  return postCall('/items', body);
 }
 export async function updateItem(id) {
   return putCall(`/items/${id}`, {});
