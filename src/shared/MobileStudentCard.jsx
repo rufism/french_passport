@@ -1,7 +1,7 @@
 import React from 'react';
 import { Person } from '@mui/icons-material';
 
-export default function MobileStudentCard({ firstName, lastName, onEdit }) {
+export default function MobileStudentCard({ firstName, lastName, onEdit, onClick }) {
   return (
     <div
       style={{
@@ -14,6 +14,10 @@ export default function MobileStudentCard({ firstName, lastName, onEdit }) {
         borderRadius: '0.3em',
         padding: '1em'
       }}
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={onClick}
     >
       <Person
         style={{

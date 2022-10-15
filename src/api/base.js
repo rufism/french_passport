@@ -56,8 +56,8 @@ export async function getStudents() {
 export async function createStudent(body) {
   return postCall('/students', body);
 }
-export async function updateStudent(id) {
-  return putCall(`/students/${id}`, {});
+export async function updateStudent(id, body) {
+  return putCall(`/students/${id}`, body);
 }
 export async function deleteStudent(id) {
   return deleteCall(`/students/${id}`);
@@ -72,8 +72,8 @@ export async function getTeachers() {
 export async function createTeacher(body) {
   return postCall('/teachers', body);
 }
-export async function updateTeacher(id) {
-  return putCall(`/teachers/${id}`);
+export async function updateTeacher(id, body) {
+  return putCall(`/teachers/${id}`, body);
 }
 export async function deleteTeacher(id) {
   return deleteCall(`/teachers/${id}`);
@@ -88,8 +88,8 @@ export async function getItems() {
 export async function createItem(body) {
   return postCall('/items', body);
 }
-export async function updateItem(id) {
-  return putCall(`/items/${id}`, {});
+export async function updateItem(id, body) {
+  return putCall(`/items/${id}`, body);
 }
 export async function deleteItem(id) {
   return deleteCall(`/items/${id}`);

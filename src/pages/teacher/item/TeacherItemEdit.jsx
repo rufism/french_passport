@@ -5,10 +5,12 @@ import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import StandardHeader from '../../../shared/StandardHeader';
 import MobilePassportItem from '../../../shared/MobilePassportItem';
 import IconOption from '../../../shared/IconOption';
+import * as api from '../../../api/base';
 
 export default function TeacherItemEdit() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [saving, setSaving] = useState(false);
   const [enteredName, setEnteredName] = useState(location.state.currName || '');
   const [enteredGroup, setEnteredGroup] = useState(location.state.currGroup || '');
   const [enteredDescription, setEnteredDescription] = useState(
@@ -18,6 +20,21 @@ export default function TeacherItemEdit() {
     location.state.currCompletionText || ''
   );
   const [iconSelection, setIconSelection] = useState(location.state.currIconSelection || 0);
+
+  const handleSave = async () => {
+    setSaving(true);
+
+    await api.updateItem(location.state.id, {
+      title: enteredName,
+      desc: enteredDescription,
+      icon: iconSelection,
+      submissionType: 'text',
+      submissionMessage: enteredCompletionText
+    });
+
+    setSaving(false);
+    navigate('/teacher');
+  };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Item Edit" />;
   const contentRenderer = () => (
@@ -124,11 +141,12 @@ export default function TeacherItemEdit() {
   );
   const footerRenderer = () => (
     <div>
-      <button type="button" onClick={() => navigate('/teacher')}>
-        Save
-      </button>
-      <button type="button" onClick={() => navigate('/teacher')}>
+      <button type="button" disabled={saving} onClick={() => navigate('/teacher')}>
         Cancel
+      </button>
+      {/* <button type="button" onClick={() => navigate('/teacher')}> */}
+      <button type="button" disabled={saving} onClick={handleSave}>
+        Save
       </button>
     </div>
   );

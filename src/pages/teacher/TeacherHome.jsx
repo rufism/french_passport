@@ -44,9 +44,17 @@ export default function TeacherHome() {
       <MobileStudentCard
         firstName={student.firstName}
         lastName={student.lastName}
+        onClick={() =>
+          navigate('/teacher/student/view', {
+            state: {
+              id: student.id
+            }
+          })
+        }
         onEdit={() =>
           navigate('/teacher/student/edit', {
             state: {
+              id: student.id,
               currFirstName: student.firstName,
               currLastName: student.lastName
             }
@@ -64,9 +72,17 @@ export default function TeacherHome() {
         desc={item.desc}
         iconSelection={item.icon}
         teacherView
+        onClick={() =>
+          navigate('/teacher/item/view', {
+            state: {
+              id: item.id
+            }
+          })
+        }
         onEdit={() =>
           navigate('/teacher/item/edit', {
             state: {
+              id: item.id,
               currName: item.title,
               currGroup: item.group,
               currDescription: item.desc,
@@ -85,9 +101,17 @@ export default function TeacherHome() {
       <MobileStudentCard
         firstName={teacher.firstName}
         lastName={teacher.lastName}
+        onClick={() =>
+          navigate('/teacher/teacher/view', {
+            state: {
+              id: teacher.id
+            }
+          })
+        }
         onEdit={() =>
           navigate('/teacher/teacher/edit', {
             state: {
+              id: teacher.id,
               currFirstName: teacher.firstName,
               currLastName: teacher.lastName
             }

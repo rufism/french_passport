@@ -28,6 +28,7 @@ export default function TeacherItemNew() {
     });
 
     setSaving(false);
+    navigate('/teacher');
   };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Item New" />;

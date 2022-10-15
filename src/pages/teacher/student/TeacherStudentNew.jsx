@@ -20,6 +20,7 @@ export default function TeacherStudentNew() {
     });
 
     setSaving(false);
+    navigate('/teacher');
   };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Student New" />;

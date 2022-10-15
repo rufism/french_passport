@@ -7,6 +7,7 @@ export default function MobilePassportItem({
   iconSelection,
   completed,
   teacherView,
+  onClick,
   onEdit,
   onCheck
 }) {
@@ -100,6 +101,10 @@ export default function MobilePassportItem({
         borderRadius: '0.3em',
         padding: '1em'
       }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={onClick}
+      onClick={onClick}
     >
       <div
         style={{
