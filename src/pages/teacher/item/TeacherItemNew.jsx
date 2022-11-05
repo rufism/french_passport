@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Book, Person, Home, Key } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import StandardHeader from '../../../shared/StandardHeader';
 import MobilePassportItem from '../../../shared/MobilePassportItem';
@@ -28,7 +29,9 @@ export default function TeacherItemNew() {
     });
 
     setSaving(false);
-    navigate('/teacher');
+    navigate('/teacher', {
+      state: { snack: { error: false, message: 'Successfully created item' } }
+    });
   };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Item New" />;
@@ -135,14 +138,18 @@ export default function TeacherItemNew() {
     </div>
   );
   const footerRenderer = () => (
-    <div>
-      {/* <button type="button" onClick={() => navigate('/teacher')}> */}
-      <button type="button" disabled={saving} onClick={() => navigate('/teacher')}>
+    <div style={{ display: 'flex', gap: '10px' }}>
+      <Button
+        type="button"
+        variant="outlined"
+        disabled={saving}
+        onClick={() => navigate('/teacher')}
+      >
         Cancel
-      </button>
-      <button type="button" disabled={saving} onClick={handleSave}>
+      </Button>
+      <Button type="button" variant="outlined" disabled={saving} onClick={handleSave}>
         Save
-      </button>
+      </Button>
     </div>
   );
 

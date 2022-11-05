@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import MobileStudentCard from '../../../shared/MobileStudentCard';
 import StandardHeader from '../../../shared/StandardHeader';
@@ -20,7 +21,9 @@ export default function TeacherTeacherNew() {
     });
 
     setSaving(false);
-    navigate('/teacher');
+    navigate('/teacher', {
+      state: { snack: { error: false, message: 'Successfully created teacher' } }
+    });
   };
 
   const headerRenderer = () => <StandardHeader subHeaderText="Teacher New" />;
@@ -71,14 +74,18 @@ export default function TeacherTeacherNew() {
     </div>
   );
   const footerRenderer = () => (
-    <div>
-      {/* <button type="button" onClick={() => navigate('/teacher')}> */}
-      <button type="button" disabled={saving} onClick={() => navigate('/teacher')}>
+    <div style={{ display: 'flex', gap: '10px' }}>
+      <Button
+        type="button"
+        variant="outlined"
+        disabled={saving}
+        onClick={() => navigate('/teacher')}
+      >
         Cancel
-      </button>
-      <button type="button" disabled={saving} onClick={handleSave}>
+      </Button>
+      <Button type="button" variant="outlined" disabled={saving} onClick={handleSave}>
         Save
-      </button>
+      </Button>
     </div>
   );
 

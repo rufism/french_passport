@@ -158,7 +158,7 @@ resource "aws_apigatewayv2_api" "lambda" {
   cors_configuration {
     allow_origins = ["*"]
     allow_methods = ["POST", "GET", "PUT", "DELETE"]
-    allow_headers = ["content-type"]
+    allow_headers = ["content-type", "authorization"]
     max_age = 300
   }
 }
@@ -205,6 +205,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_student" {
 
   route_key = "GET /students/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_all_students" {
@@ -212,6 +216,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_all_students" {
 
   route_key = "GET /students/all"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_create_student" {
@@ -219,6 +227,10 @@ resource "aws_apigatewayv2_route" "french_passport_create_student" {
 
   route_key = "POST /students"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_update_student" {
@@ -226,6 +238,10 @@ resource "aws_apigatewayv2_route" "french_passport_update_student" {
 
   route_key = "PUT /students/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_delete_student" {
@@ -233,6 +249,10 @@ resource "aws_apigatewayv2_route" "french_passport_delete_student" {
 
   route_key = "DELETE /students/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_teacher" {
@@ -240,6 +260,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_teacher" {
 
   route_key = "GET /teachers/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_all_teachers" {
@@ -247,6 +271,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_all_teachers" {
 
   route_key = "GET /teachers/all"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_create_teacher" {
@@ -254,6 +282,10 @@ resource "aws_apigatewayv2_route" "french_passport_create_teacher" {
 
   route_key = "POST /teachers"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_update_teacher" {
@@ -261,6 +293,10 @@ resource "aws_apigatewayv2_route" "french_passport_update_teacher" {
 
   route_key = "PUT /teachers/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_delete_teacher" {
@@ -268,6 +304,10 @@ resource "aws_apigatewayv2_route" "french_passport_delete_teacher" {
 
   route_key = "DELETE /teachers/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_item" {
@@ -275,6 +315,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_item" {
 
   route_key = "GET /items/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_all_items" {
@@ -282,6 +326,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_all_items" {
 
   route_key = "GET /items/all"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_create_item" {
@@ -289,6 +337,10 @@ resource "aws_apigatewayv2_route" "french_passport_create_item" {
 
   route_key = "POST /items"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_update_item" {
@@ -296,6 +348,10 @@ resource "aws_apigatewayv2_route" "french_passport_update_item" {
 
   route_key = "PUT /items/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_delete_item" {
@@ -303,6 +359,10 @@ resource "aws_apigatewayv2_route" "french_passport_delete_item" {
 
   route_key = "DELETE /items/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_submission" {
@@ -310,6 +370,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_submission" {
 
   route_key = "GET /submissions/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_get_all_submissions" {
@@ -317,6 +381,10 @@ resource "aws_apigatewayv2_route" "french_passport_get_all_submissions" {
 
   route_key = "GET /submissions/all"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_apigatewayv2_route" "french_passport_create_submission" {
@@ -324,6 +392,10 @@ resource "aws_apigatewayv2_route" "french_passport_create_submission" {
 
   route_key = "POST /submissions"
   target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
 resource "aws_cloudwatch_log_group" "api_gw" {
@@ -512,4 +584,98 @@ resource "aws_dynamodb_table" "submissions_table" {
   #   name = "deleted"
   #   type = "N"
   # }
+}
+
+resource "aws_dynamodb_table" "groups_table" {
+  name = "FrenchPassportGroupsTable"
+  billing_mode = "PROVISIONED"
+  read_capacity = 1
+  write_capacity = 1
+  hash_key = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+
+  # attribute {
+  #   name = "title"
+  #   type = "S"
+  # }
+
+  # attribute {
+  #   name = "items"
+  #   type = "SS"
+  # }
+
+  # attribute {
+  #   name = "createdAt"
+  #   type = "N"
+  # }
+
+  # attribute {
+  #   name = "createdBy"
+  #   type = "S"
+  # }
+
+  # attribute {
+  #   name = "updatedAt"
+  #   type = "N"
+  # }
+
+  # attribute {
+  #   name = "updatedBy"
+  #   type = "S"
+  # }
+
+  # attribute {
+  #   name = "deleted"
+  #   type = "N"
+  # }
+}
+
+#
+# Auth
+#
+
+resource "aws_cognito_user_pool" "pool" {
+  name = "french_passport_user_pool"
+}
+
+resource "aws_cognito_resource_server" "resource_server" {
+  name = "french_passport_resource_server"
+  identifier = "french_passport"
+  user_pool_id = aws_cognito_user_pool.pool.id
+
+  scope {
+    scope_name = "all"
+    scope_description = "Testing access"
+  }
+}
+
+resource "aws_cognito_user_pool_domain" "pool_domain" {
+  domain = "french-passport"
+  user_pool_id = aws_cognito_user_pool.pool.id
+}
+
+resource "aws_cognito_user_pool_client" "client" {
+  name = "french_passport_user_pool_client"
+  user_pool_id = aws_cognito_user_pool.pool.id
+  callback_urls = ["http://localhost:3000/login"]
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_flows = ["code"]
+  allowed_oauth_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+  supported_identity_providers = ["COGNITO"]
+}
+
+resource "aws_apigatewayv2_authorizer" "auth" {
+  api_id = aws_apigatewayv2_api.lambda.id
+  authorizer_type = "JWT"
+  identity_sources = ["$request.header.Authorization"]
+  name = "french-passport-cognito-auth"
+
+  jwt_configuration {
+    audience = [aws_cognito_user_pool_client.client.id]
+    issuer = "https://${aws_cognito_user_pool.pool.endpoint}"
+  }
 }

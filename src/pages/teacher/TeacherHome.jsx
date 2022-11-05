@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Snackbar } from '@mui/material';
 import ScrollingLayoutWithTabs from '../../layouts/ScrollingLayoutWithTabs';
 import StandardHeader from '../../shared/StandardHeader';
 import MobileStudentCard from '../../shared/MobileStudentCard';
@@ -12,29 +13,47 @@ export default function TeacherHome() {
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [items, setItems] = useState([]);
+  const [snackOpen, setSnackOpen] = useState(false);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     async function getData() {
-      setLoading(true);
+      if (!loading) {
+        setLoading(true);
 
-      const studentsRes = await api.getStudents();
-      setStudents(studentsRes.students);
+        const studentsRes = await api.getStudents();
+        setStudents(studentsRes.students);
 
-      const itemsRes = await api.getItems();
-      setItems(itemsRes.items);
+        const itemsRes = await api.getItems();
+        setItems(itemsRes.items);
 
-      const teachersRes = await api.getTeachers();
-      setTeachers(teachersRes.teachers);
+        const teachersRes = await api.getTeachers();
+        setTeachers(teachersRes.teachers);
 
-      setLoading(false);
+        setLoading(false);
+      }
     }
 
     getData();
   }, []);
+
+  useEffect(() => {
+    if (location.state && location.state.snack) {
+      setSnackOpen(true);
+    }
+  }, []);
+
+  const handleSnackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
 
   let contentMarkup;
   if (loading) {
@@ -181,6 +200,13 @@ export default function TeacherHome() {
         alignItems: 'center'
       }}
     >
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={snackOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackClose}
+        message={location.state ? location.state.snack.message : ''}
+      />
       {contentMarkup}
     </div>
   );

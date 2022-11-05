@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
-export default function ItemCompletionModal({ completionText, show, onComplete, onCancel }) {
+export default function DeleteConfirmationModal({ show, onDelete, onCancel }) {
   if (!show) {
     return null;
   }
@@ -36,18 +36,18 @@ export default function ItemCompletionModal({ completionText, show, onComplete, 
         }}
       >
         {/* Header */}
-        <div style={{ height: '35px' }}>Complete Item</div>
+        <div style={{ height: '35px' }}>Confirm Delete</div>
 
         {/* Body */}
-        <div style={{ flexGrow: '1' }}>{completionText}</div>
+        <div style={{ flexGrow: '1' }}>Are you sure you want to delete?</div>
 
         {/* Footer */}
-        <div style={{ justifySelf: 'flex-end' }}>
-          <Button type="button" onClick={onComplete}>
+        <div style={{ justifySelf: 'flex-end', display: 'flex', gap: '10px' }}>
+          <Button type="button" variant="outlined" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="button" onClick={onCancel}>
-            Complete
+          <Button type="button" variant="outlined" color="error" onClick={onDelete}>
+            Delete
           </Button>
         </div>
       </div>

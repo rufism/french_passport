@@ -1,20 +1,19 @@
 const BASE_URL = 'https://9s1hgfaw08.execute-api.us-east-2.amazonaws.com/serverless_lambda_stage';
 
-export async function baseCall(method, path, body, query) {
-  console.log(method);
-  console.log(path);
-  console.log(body);
-  console.log(query);
+async function baseCall(method, path, body, query) {
+  const authToken = localStorage.getItem('authToken');
+
   const queryString = Object.entries(query).reduce((acc, q) => {
     const newAcc = acc === '' ? `?${q[0]}=${q[1]}` : `${acc},${q[0]}=${q[1]}`;
     return newAcc;
   }, '');
 
-  console.log(queryString);
-
   const fetchResult = await fetch(`${BASE_URL}${path}${queryString}`, {
     mode: 'cors',
     method,
+    headers: {
+      Authorization: authToken
+    },
     body: body ? JSON.stringify(body) : undefined
   });
 
@@ -27,25 +26,52 @@ export async function baseCall(method, path, body, query) {
   return jsonResponse;
 }
 
-export async function getCall(path, query) {
+async function getCall(path, query) {
   return baseCall('get', path, null, query || {});
 }
 
-export async function postCall(path, body) {
+async function postCall(path, body) {
   return baseCall('post', path, body, {});
 }
 
-export async function putCall(path, body) {
+async function putCall(path, body) {
   return baseCall('put', path, body, {});
 }
 
-export async function deleteCall(path) {
+async function deleteCall(path) {
   return baseCall('delete', path, null, {});
 }
 
 /*
   API
 */
+
+export async function grant(code) {
+  const fetchResult = await fetch(
+    'https://french-passport.auth.us-east-2.amazoncognito.com/oauth2/token',
+    {
+      mode: 'cors',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: '70lkb2kb4f9rubgbp07ueeqv8f',
+        redirect_uri: 'http://localhost:3000/login',
+        code
+      })
+    }
+  );
+
+  // handle error
+  if (!fetchResult.ok) {
+    // do something wild
+  }
+
+  const jsonResponse = await fetchResult.json();
+  return jsonResponse;
+}
 
 export async function getStudent(id) {
   return getCall(`/students/${id}`);

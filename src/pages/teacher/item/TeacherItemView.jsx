@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Button } from '@mui/material';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import StandardHeader from '../../../shared/StandardHeader';
 import * as api from '../../../api/base';
@@ -82,12 +83,13 @@ export default function TeacherItemView() {
   const headerRenderer = () => <StandardHeader subHeaderText="Item View" />;
   const contentRenderer = () => contentMarkup;
   const footerRenderer = () => (
-    <div>
-      <button type="button" onClick={() => navigate('/teacher')}>
+    <div style={{ display: 'flex', gap: '10px' }}>
+      <Button type="button" variant="outlined" onClick={() => navigate('/teacher')}>
         Back
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
+        variant="outlined"
         onClick={() => {
           navigate('/teacher/item/edit', {
             state: {
@@ -102,7 +104,7 @@ export default function TeacherItemView() {
         }}
       >
         Edit
-      </button>
+      </Button>
     </div>
   );
 
