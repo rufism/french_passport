@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import jwtDecode from 'jwt-decode';
 import { Language } from '@mui/icons-material';
-import LoginLayout from '../layouts/LoginLayout';
+import LoginLayout from '../layouts/LoginLayout/LoginLayout';
 import * as api from '../api/base';
 
 export default function LoginPage() {
@@ -25,6 +26,26 @@ export default function LoginPage() {
 
         localStorage.setItem('authToken', response.access_token);
         setGranting(false);
+
+        const decoded = jwtDecode(response.access_token);
+        let group;
+        try {
+          [group] = decoded['cognito:groups'];
+        } catch (error) {
+          console.log('error retrieving account group');
+          console.log(error);
+        }
+
+        console.log(decoded);
+
+        localStorage.setItem('group', group);
+        localStorage.setItem('exp', decoded.exp);
+
+        if (group === 'teachers') {
+          window.location.href = 'http://localhost:3000/teacher';
+        } else {
+          window.location.href = 'http://localhost:3000/student';
+        }
       }
     }
 
@@ -35,6 +56,7 @@ export default function LoginPage() {
     <LoginLayout>
       <div
         style={{
+          color: 'white',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

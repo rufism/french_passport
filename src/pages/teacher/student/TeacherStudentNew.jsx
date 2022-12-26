@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
 import MobileStudentCard from '../../../shared/MobileStudentCard';
-import StandardHeader from '../../../shared/StandardHeader';
+import StandardHeader from '../../../shared/components/StandardHeader/StandardHeader';
 import * as api from '../../../api/base';
 
 export default function TeacherStudentNew() {

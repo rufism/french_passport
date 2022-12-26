@@ -105,6 +105,22 @@ export async function deleteTeacher(id) {
   return deleteCall(`/teachers/${id}`);
 }
 
+export async function getGroup(id) {
+  return getCall(`/groups/${id}`);
+}
+export async function getGroups() {
+  return getCall('/groups/all');
+}
+export async function createGroup(body) {
+  return postCall('/groups', body);
+}
+export async function updateGroup(id, body) {
+  return putCall(`/groups/${id}`, body);
+}
+export async function deleteGroup(id) {
+  return deleteCall(`/groups/${id}`);
+}
+
 export async function getItem(id) {
   return getCall(`/items/${id}`);
 }

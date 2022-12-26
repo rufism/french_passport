@@ -277,6 +277,133 @@ async function deleteTeacher(args) {
 
 /*
 
+  Groups
+
+*/
+async function getGroup(args) {
+  // log
+  console.log(`get group ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const pass = {
+    id: args.pathParams.id
+  };
+
+  // call
+  const res = await dydb.getGroup(pass);
+
+  // return
+  return {
+    id: res.id,
+    title: res.title,
+    createdAt: res.createdAt,
+    createdBy: res.createdBy,
+    updatedAt: res.updatedAt,
+    updatedBy: res.updatedBy
+  };
+}
+
+async function getGroups(args) {
+  // log
+  console.log(`get all groups ${JSON.stringify(args)}`);
+
+  // validate
+
+  // conversion
+  const pass = {};
+
+  // call
+  const res = await dydb.getAllGroups(pass);
+
+  // return
+  return {
+    groups: res.map((group) => ({
+      id: group.id,
+      title: group.title,
+      createdAt: group.createdAt,
+      createdBy: group.createdBy,
+      updatedAt: group.updatedAt,
+      updatedBy: group.updatedBy
+    }))
+  };
+}
+
+async function createGroup(args) {
+  // log
+  console.log(`create group ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const id = crypto.randomUUID();
+  const timestamp = Date.now();
+  const pass = {
+    id,
+    title: args.body.title,
+    createdAt: timestamp,
+    createdBy: '',
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: false
+  };
+
+  console.log(`passed params ${JSON.stringify(pass)}`);
+
+  await dydb.createGroup(pass);
+
+  // conversion
+  return { message: 'successfully created item' };
+}
+
+async function updateGroup(args) {
+  // log
+  console.log(`update group ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: ''
+  };
+
+  if (args.body.title) pass.title = args.body.title;
+
+  // call
+  await dydb.updateGroup(pass);
+
+  // return
+  return { message: 'successfully updated group' };
+}
+
+async function deleteGroup(args) {
+  // log
+  console.log(`delete group ${JSON.stringify(args)}`);
+
+  // validation
+
+  // conversion
+  const timestamp = Date.now();
+  const pass = {
+    id: args.pathParams.id,
+    updatedAt: timestamp,
+    updatedBy: '',
+    deleted: true
+  };
+
+  // call
+  await dydb.updateGroup(pass);
+
+  // return
+  return { message: 'successfully deleted group' };
+}
+
+/*
+
   Items
 
 */
@@ -302,6 +429,7 @@ async function getItem(args) {
     icon: res.icon,
     submissionType: res.submissionType,
     submissionMessage: res.submissionMessage,
+    groupId: res.groupId,
     createdAt: res.createdAt,
     createdBy: res.createdBy,
     updatedAt: res.updatedAt,
@@ -330,6 +458,7 @@ async function getItems(args) {
       icon: item.icon,
       submissionType: item.submissionType,
       submissionMessage: item.submissionMessage,
+      groupId: item.groupId,
       createdAt: item.createdAt,
       createdBy: item.createdBy,
       updatedAt: item.updatedAt,
@@ -354,6 +483,7 @@ async function createItem(args) {
     icon: args.body.icon,
     submissionType: args.body.submissionType,
     submissionMessage: args.body.submissionMessage,
+    groupId: args.body.groupId,
     createdAt: timestamp,
     createdBy: '',
     updatedAt: timestamp,
@@ -388,6 +518,7 @@ async function updateItem(args) {
   if (args.body.icon) pass.icon = args.body.icon;
   if (args.body.submissionType) pass.submissionType = args.body.submissionType;
   if (args.body.submissionMessage) pass.submissionMessage = args.body.submissionMessage;
+  if (args.body.groupId) pass.groupId = args.body.groupId;
 
   // call
   await dydb.updateItem(pass);
@@ -514,6 +645,11 @@ module.exports = {
   createTeacher,
   updateTeacher,
   deleteTeacher,
+  getGroup,
+  getGroups,
+  createGroup,
+  updateGroup,
+  deleteGroup,
   getItem,
   getItems,
   createItem,

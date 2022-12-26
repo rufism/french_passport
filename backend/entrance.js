@@ -14,6 +14,12 @@ routes.addPost('/teachers', middle.createTeacher);
 routes.addPut('/teachers/{id}', middle.updateTeacher);
 routes.addDelete('/teachers/{id}', middle.deleteTeacher);
 
+routes.addGet('/groups/all', middle.getGroups);
+routes.addGet('/groups/{id}', middle.getGroup);
+routes.addPost('/groups', middle.createGroup);
+routes.addPut('/groups/{id}', middle.updateGroup);
+routes.addDelete('/groups/{id}', middle.deleteGroup);
+
 routes.addGet('/items/all', middle.getItems);
 routes.addGet('/items/{id}', middle.getItem);
 routes.addPost('/items', middle.createItem);

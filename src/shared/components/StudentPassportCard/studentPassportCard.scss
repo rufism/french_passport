@@ -1,0 +1,14 @@
+@import '../../styles/colours.scss';
+
+.passport-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  cursor: pointer;
+  border-radius: 0.3em;
+  padding: 1em;
+  background-color: $base_white;
+
+  filter: $base_card_dropshadow;
+}

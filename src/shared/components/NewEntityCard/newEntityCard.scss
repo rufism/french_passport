@@ -1,0 +1,30 @@
+@import '../../styles/colours.scss';
+
+.new-entity-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 35px;
+  width: 80%;
+  cursor: pointer;
+  border-radius: 0.3em;
+  padding: 1em;
+  background-color: $base_purple;
+  color: $base_white;
+
+  filter: $base_card_dropshadow;
+
+  &:hover {
+    background-color: $base_yellow;
+  }
+}
+
+.new-entity-card-icon {
+  display: flex;
+}
+
+.new-entity-card-label {
+  & div {
+    font-size: 14pt;
+  }
+}

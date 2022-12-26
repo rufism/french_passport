@@ -3,8 +3,8 @@ import { Book, Person, Home, Key } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
-import StandardHeader from '../../../shared/StandardHeader';
-import MobilePassportItem from '../../../shared/MobilePassportItem';
+import StandardHeader from '../../../shared/components/StandardHeader/StandardHeader';
+import MobilePassportItem from '../../../shared/components/PassportCard/PassportCard';
 import IconOption from '../../../shared/IconOption';
 import * as api from '../../../api/base';
 

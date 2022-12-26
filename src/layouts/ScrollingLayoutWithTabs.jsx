@@ -8,7 +8,7 @@ export default function ScrollingLayoutWithTabs({ headerRenderer, tabRenderer, c
         height: '100%',
         display: 'grid',
         gridTemplateColumns: '[left] 5% [left-mid] 90% [right-mid] 5% [right]',
-        gridTemplateRows: '[top] 125px [tab-top] 50px [tab-bottom] auto [bottom]'
+        gridTemplateRows: '[top] 100px [tab-top] 50px [tab-bottom] auto [bottom]'
       }}
     >
       <div

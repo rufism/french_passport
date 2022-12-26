@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Snackbar } from '@mui/material';
 import ScrollingLayoutWithTabs from '../../layouts/ScrollingLayoutWithTabs';
-import StandardHeader from '../../shared/StandardHeader';
-import MobileStudentCard from '../../shared/MobileStudentCard';
-import MobilePassportItem from '../../shared/MobilePassportItem';
-import NewEntityCard from '../../shared/NewEntityCard';
+import StandardHeader from '../../shared/components/StandardHeader/StandardHeader';
+import PassportCard from '../../shared/components/PassportCard/PassportCard';
+import NewEntityCard from '../../shared/components/NewEntityCard';
+import StudentCard from '../../shared/components/StudentCard';
+import TeacherCard from '../../shared/components/TeacherCard';
 import * as api from '../../api/base';
 
 export default function TeacherHome() {
   const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [items, setItems] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
 
@@ -27,6 +29,9 @@ export default function TeacherHome() {
 
         const studentsRes = await api.getStudents();
         setStudents(studentsRes.students);
+
+        const groupsRes = await api.getGroups();
+        setGroups(groupsRes.groups);
 
         const itemsRes = await api.getItems();
         setItems(itemsRes.items);
@@ -60,7 +65,7 @@ export default function TeacherHome() {
     contentMarkup = <div>Loading</div>;
   } else if (activeTabIndex === 0) {
     contentMarkup = students.map((student) => (
-      <MobileStudentCard
+      <StudentCard
         firstName={student.firstName}
         lastName={student.lastName}
         onClick={() =>
@@ -85,8 +90,10 @@ export default function TeacherHome() {
       <NewEntityCard label="New Student" onClick={() => navigate('/teacher/student/new')} />
     );
   } else if (activeTabIndex === 1) {
+    // organize groups
+
     contentMarkup = items.map((item) => (
-      <MobilePassportItem
+      <PassportCard
         title={item.title}
         desc={item.desc}
         iconSelection={item.icon}
@@ -117,7 +124,7 @@ export default function TeacherHome() {
     );
   } else if (activeTabIndex === 2) {
     contentMarkup = teachers.map((teacher) => (
-      <MobileStudentCard
+      <TeacherCard
         firstName={teacher.firstName}
         lastName={teacher.lastName}
         onClick={() =>

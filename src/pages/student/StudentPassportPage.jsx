@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import ScrollingLayout from '../../layouts/ScrollingLayout';
-import StandardHeader from '../../shared/StandardHeader';
-import MobilePassportItem from '../../shared/MobilePassportItem';
+import StandardHeader from '../../shared/components/StandardHeader/StandardHeader';
+import MobilePassportItem from '../../shared/components/PassportCard/PassportCard';
 import ItemCompletionModal from '../../shared/ItemCompletionModal';
 import items from '../../items.json';
 import accounts from '../../accounts.json';

@@ -1,0 +1,8 @@
+@import '../../shared/styles/colours.scss';
+
+.home {
+  color: $base_white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

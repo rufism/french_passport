@@ -1,0 +1,11 @@
+@import '../../styles//colours.scss';
+
+.standard-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  background-color: linear-gradient(0.25turn, $light_purple_2, $base_purple);
+  // color: $base_white;
+}

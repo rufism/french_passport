@@ -1,0 +1,17 @@
+@import '../../shared/styles/colours.scss';
+
+.login-layout {
+  background: linear-gradient($base_purple 70%, $dark_purple_1);
+  display: grid;
+  grid-template-rows: [top] 25% [mid-top] 50% [mid-bottom] 25% [bottom];
+  grid-template-columns: [left] 10% [mid-left] 80% [mid-right] 10% [right];
+  height: 100%;
+  width: 100%;
+}
+
+.login-layout-island {
+  grid-column-start: mid-left;
+  grid-column-end: mid-right;
+  grid-row-start: mid-top;
+  grid-row-end: bottom;
+}

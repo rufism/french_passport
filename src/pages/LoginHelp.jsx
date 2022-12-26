@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import LoginLayout from '../layouts/LoginLayout';
+import LoginLayout from '../layouts/LoginLayout/LoginLayout';
 
 export default function LoginHelp() {
   return (

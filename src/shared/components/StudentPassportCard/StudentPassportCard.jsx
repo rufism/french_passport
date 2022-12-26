@@ -1,27 +1,15 @@
 import React from 'react';
 import { Book, Home, Key, Person } from '@mui/icons-material';
+import './studentPassportCard.scss';
 
-export default function MobilePassportItem({
+export default function StudentPassportCard({
   title,
   desc,
   iconSelection,
   completed,
-  teacherView,
   onClick,
-  onEdit,
   onCheck
 }) {
-  let cardActionMarkup = <input type="checkbox" checked={completed} onClick={onCheck} />;
-  if (teacherView) {
-    cardActionMarkup = (
-      <div style={{ margin: '10px' }}>
-        <button type="button" onClick={onEdit}>
-          Edit
-        </button>
-      </div>
-    );
-  }
-
   let iconMarkup;
   switch (iconSelection) {
     case 0:
@@ -91,16 +79,7 @@ export default function MobilePassportItem({
 
   return (
     <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '80%',
-        cursor: 'pointer',
-        border: '1px solid grey',
-        borderRadius: '0.3em',
-        padding: '1em'
-      }}
+      className="student-passport-card"
       role="button"
       tabIndex={0}
       onKeyDown={onClick}
@@ -120,7 +99,7 @@ export default function MobilePassportItem({
         <div style={{ fontSize: '14pt', textDecoration: completed ? 'line-through' : 'none' }}>
           {title}
         </div>
-        {cardActionMarkup}
+        <input type="checkbox" checked={completed} onClick={onCheck} />
       </div>
       <div style={{ margin: '10px', width: '100%' }}>
         <div style={{ fontSize: '10pt', textAlign: 'left' }}>{desc}</div>

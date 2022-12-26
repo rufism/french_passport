@@ -1,18 +1,10 @@
 import React from 'react';
 import { Menu, Language } from '@mui/icons-material';
+import './standardHeader.scss';
 
 export default function StandardHeader({ subHeaderText }) {
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '125px',
-        borderBottom: '1px solid grey'
-      }}
-    >
+    <div className="standard-header">
       <div style={{ margin: '10px' }}>
         <Language />
       </div>

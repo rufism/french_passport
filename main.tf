@@ -310,6 +310,61 @@ resource "aws_apigatewayv2_route" "french_passport_delete_teacher" {
   authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
 }
 
+resource "aws_apigatewayv2_route" "french_passport_get_group" {
+  api_id = aws_apigatewayv2_api.lambda.id
+
+  route_key = "GET /groups/{id}"
+  target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+}
+
+resource "aws_apigatewayv2_route" "french_passport_get_all_groups" {
+  api_id = aws_apigatewayv2_api.lambda.id
+
+  route_key = "GET /groups/all"
+  target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+}
+
+resource "aws_apigatewayv2_route" "french_passport_create_group" {
+  api_id = aws_apigatewayv2_api.lambda.id
+
+  route_key = "POST /groups"
+  target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+}
+
+resource "aws_apigatewayv2_route" "french_passport_update_group" {
+  api_id = aws_apigatewayv2_api.lambda.id
+
+  route_key = "PUT /groups/{id}"
+  target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+}
+
+resource "aws_apigatewayv2_route" "french_passport_delete_group" {
+  api_id = aws_apigatewayv2_api.lambda.id
+
+  route_key = "DELETE /groups/{id}"
+  target    = "integrations/${aws_apigatewayv2_integration.french_passport.id}"
+
+  authorization_type = "JWT"
+  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorization_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+}
+
 resource "aws_apigatewayv2_route" "french_passport_get_item" {
   api_id = aws_apigatewayv2_api.lambda.id
 
@@ -513,6 +568,11 @@ resource "aws_dynamodb_table" "items_table" {
   # }
 
   # attribute {
+  #   name = "groupId"
+  #   type = "S"
+  # }
+
+  # attribute {
   #   name = "createdAt"
   #   type = "N"
   # }
@@ -604,11 +664,6 @@ resource "aws_dynamodb_table" "groups_table" {
   # }
 
   # attribute {
-  #   name = "items"
-  #   type = "SS"
-  # }
-
-  # attribute {
   #   name = "createdAt"
   #   type = "N"
   # }
@@ -648,7 +703,7 @@ resource "aws_cognito_resource_server" "resource_server" {
   user_pool_id = aws_cognito_user_pool.pool.id
 
   scope {
-    scope_name = "all"
+    scope_name = "accounts."
     scope_description = "Testing access"
   }
 }
@@ -664,7 +719,7 @@ resource "aws_cognito_user_pool_client" "client" {
   callback_urls = ["http://localhost:3000/login"]
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows = ["code"]
-  allowed_oauth_scopes = aws_cognito_resource_server.resource_server.scope_identifiers
+  allowed_oauth_scopes = concat(aws_cognito_resource_server.resource_server.scope_identifiers, ["openid"])
   supported_identity_providers = ["COGNITO"]
 }
 
@@ -678,4 +733,46 @@ resource "aws_apigatewayv2_authorizer" "auth" {
     audience = [aws_cognito_user_pool_client.client.id]
     issuer = "https://${aws_cognito_user_pool.pool.endpoint}"
   }
+}
+
+resource "aws_iam_role" "teacher_group_role" {
+  name = "teacher-group-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRoleWithWebIdentity"
+      Effect = "Allow"
+      Principal = {
+        Federated = "cognito-identity.amazonaws.com"
+      }
+    }]
+  })
+}
+
+resource "aws_cognito_user_group" "teacher_group" {
+  name = "teachers"
+  user_pool_id = aws_cognito_user_pool.pool.id
+  description = "teacher role group"
+  role_arn = aws_iam_role.teacher_group_role.arn
+}
+
+resource "aws_iam_role" "student_group_role" {
+  name = "student-group-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRoleWithWebIdentity"
+      Effect = "Allow"
+      Principal = {
+        Federated = "cognito-identity.amazonaws.com"
+      }
+    }]
+  })
+}
+
+resource "aws_cognito_user_group" "student_group" {
+  name = "students"
+  user_pool_id = aws_cognito_user_pool.pool.id
+  description = "student role group"
+  role_arn = aws_iam_role.student_group_role.arn
 }

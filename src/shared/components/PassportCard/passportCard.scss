@@ -1,0 +1,14 @@
+@import '../../styles/colours.scss';
+@import '../../styles/spacing.scss';
+
+.passport-card {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border-radius: $default_border_radius;
+  padding: $default_card_padding;
+  background-color: $base_white;
+  gap: $default_gap;
+
+  filter: $base_card_dropshadow;
+}

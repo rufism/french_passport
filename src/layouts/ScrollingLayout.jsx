@@ -8,7 +8,7 @@ export default function ScrollingLayout({ headerRenderer, contentRenderer }) {
         height: '100%',
         display: 'grid',
         gridTemplateColumns: '[left] 5% [left-mid] 90% [right-mid] 5% [right]',
-        gridTemplateRows: '[top] 125px [mid] auto [bottom]'
+        gridTemplateRows: '[top] 100px [mid] auto [bottom]'
       }}
     >
       <div

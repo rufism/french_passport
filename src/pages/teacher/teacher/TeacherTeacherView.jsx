@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@mui/material';
 import SingleEditLayout from '../../../layouts/SingleEditLayout';
-import StandardHeader from '../../../shared/StandardHeader';
+import StandardHeader from '../../../shared/components/StandardHeader/StandardHeader';
 import * as api from '../../../api/base';
 
 export default function TeacherTeacherView() {
